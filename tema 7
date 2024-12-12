@@ -1,0 +1,44 @@
+import tkinter as tk
+import time
+
+def bubble_sort_visual(arr, canvas, bars):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+
+
+                update_bars(canvas, bars, arr)
+                time.sleep(0.1)
+
+def update_bars(canvas, bars, arr):
+    canvas.delete("all")
+    bar_width = 39
+    spacing = 14
+    for i, val in enumerate(arr):
+        x0 = i * (bar_width + spacing)
+        y0 = 300 - val
+        x1 = x0 + bar_width
+        y1 = 350
+        bars[i] = canvas.create_rectangle(x0, y0, x1, y1, fill="orange")
+
+def start_sorting():
+    global numbers, canvas, bars
+    bubble_sort_visual(numbers, canvas, bars)
+
+if __name__ == "__main__":
+
+    numbers = [98, 42, 16, 78, 54, 68, 89]
+
+    root = tk.Tk()
+    root.title("Sortarea cu Bubble Sort")
+    root.configure(background="black")
+
+    canvas = tk.Canvas(root, width=700, height=400, bg="white")
+    canvas.pack()
+    bars = [None] * len(numbers)
+    update_bars(canvas, bars, numbers)
+    start_button = tk.Button(root, text="Start", command=start_sorting)
+    start_button.pack()
+    root.mainloop()
